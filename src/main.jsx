@@ -2,9 +2,13 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
+import { authUtils } from './utils/auth.js';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+// Initialize authentication
+authUtils.initializeAuth();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

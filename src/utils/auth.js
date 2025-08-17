@@ -16,7 +16,20 @@ export const authUtils = {
     return localStorage.getItem(TOKEN_KEY);
   },
 
-  // Remove token
+  // Get authorization headers for API requests
+  getAuthHeaders: () => {
+    const token = localStorage.getItem(TOKEN_KEY);
+    return token ? { 'Authorization': `Bearer ${token}` } : {};
+  },
+
+  // Remove token (for logout)
+  clearToken: () => {
+    localStorage.removeItem(TOKEN_KEY);
+    // Remove authorization header
+    delete axios.defaults.headers.common['Authorization'];
+  },
+
+  // Remove token (alternative name for backward compatibility)
   removeToken: () => {
     localStorage.removeItem(TOKEN_KEY);
     // Remove authorization header
