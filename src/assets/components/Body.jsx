@@ -6,6 +6,7 @@ import { addUser } from "../utils/userSlice";
 import axios from "axios";
 import { useEffect } from "react";
 import { API_BASE_URL } from "../../config/api";
+import { authUtils } from "../../utils/auth";
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Body = () => {
     try {
       const res = await axios.get(`${API_BASE_URL}/profile/view`, {
         withCredentials: true,
+        headers: authUtils.getAuthHeaders()
       });
       dispatch(addUser(res.data));
       

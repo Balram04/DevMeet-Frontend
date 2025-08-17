@@ -6,6 +6,7 @@ import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"; // Toast import
 import { API_BASE_URL } from "../../config/api";
+import { authUtils } from "../../utils/auth";
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -36,6 +37,11 @@ const Login = () => {
         },
         { withCredentials: true }
       );
+
+      // Handle token storage for production
+      if (res.data.token) {
+        authUtils.setToken(res.data.token);
+      }
 
       dispatch(addUser(res.data.user));
       toast.success(`${res.data.user.firstname} Login Successful! 🎉`);

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { removeUserFeed } from "../utils/feedSlice";
 import { useState, useEffect } from "react";
 import { API_BASE_URL } from "../../config/api";
+import { authUtils } from "../../utils/auth";
 
 const UserCard = ({ user }) => {
   console.log("Single user received:", user);
@@ -42,7 +43,10 @@ const UserCard = ({ user }) => {
       try{
         const res =await axios.post(
           `${API_BASE_URL}/request/send/${status}/${userId}` ,{},
-          {withCredentials:true}
+          {
+            withCredentials:true,
+            headers: authUtils.getAuthHeaders()
+          }
         );
         
         // Only dispatch if the request was successful

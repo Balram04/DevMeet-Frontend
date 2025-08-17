@@ -4,6 +4,7 @@ import { removeUser } from "../utils/userSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_BASE_URL } from "../../config/api";
+import { authUtils } from "../../utils/auth";
 const NavBar = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
@@ -16,8 +17,13 @@ const NavBar = () => {
   const handleLogout = async () => {
     try {
       const res = await axios.post(`${API_BASE_URL}/logout`, {}, {
-        withCredentials: true
+        withCredentials: true,
+        headers: authUtils.getAuthHeaders()
       });
+      
+      // Clear the token from localStorage
+      authUtils.clearToken();
+      
       dispatch(removeUser());
       toast.success("Logout Successful! 🙄");
       

@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import PhotoUpload from "./PhotoUpload";
 import { API_BASE_URL } from "../../config/api";
+import { authUtils } from "../../utils/auth";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -84,7 +85,10 @@ const EditProfile = () => {
       const res = await axios.patch(
         `${API_BASE_URL}/profile/edit`,
         updatedData,
-        { withCredentials: true }
+        { 
+          withCredentials: true,
+          headers: authUtils.getAuthHeaders()
+        }
       );
       
       console.log("API Response:", res.data);

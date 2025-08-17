@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addFeed } from '../utils/feedSlice'; // Update the path as needed
 import { useEffect, useState } from 'react';
 import UserCard from './UserCard';
-import { API_BASE_URL } from '../../config/api';
+import { API_BASE_URL } from "../../config/api";
+import { authUtils } from "../../utils/auth";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
@@ -15,7 +16,10 @@ const Feed = () => {
 
     try {
       setIsLoading(true);
-      const res = await axios.get(`${API_BASE_URL}/feed`, { withCredentials: true });
+      const res = await axios.get(`${API_BASE_URL}/feed`, { 
+        withCredentials: true,
+        headers: authUtils.getAuthHeaders()
+      });
       dispatch(addFeed(res.data));
     }
     catch (err) {

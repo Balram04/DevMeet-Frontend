@@ -4,6 +4,7 @@ import { socketConnection } from '../utils/Socket';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { API_BASE_URL } from "../../config/api";
+import { authUtils } from "../../utils/auth";
 
 const Chat = () => {
     const targetUserId = useParams().toUserId;
@@ -36,7 +37,8 @@ const Chat = () => {
                 
                 
                 const response = await axios.get(`${API_BASE_URL}/feed/user/${targetUserId}`, {
-                    withCredentials: true
+                    withCredentials: true,
+                    headers: authUtils.getAuthHeaders()
                 });
                 
                 console.log('API Response:', response.data);

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addRequests } from "../utils/requesSlice";
 import { toast } from "react-toastify";
 import { API_BASE_URL } from "../../config/api";
+import { authUtils } from "../../utils/auth";
 
 const Request = () => {
 
@@ -13,7 +14,8 @@ const Request = () => {
 const fetchRequests = async () => {
     try{
         const res = await axios.get(`${API_BASE_URL}/user/requests/received`, {
-            withCredentials: true
+            withCredentials: true,
+            headers: authUtils.getAuthHeaders()
         });
         dispatch(addRequests(res.data.data));
     }
@@ -28,7 +30,10 @@ const handleRequest = async (status, requestId) => {
         const res = await axios.post(
             `${API_BASE_URL}/request/review/${status}/${requestId}`,
             {},
-            { withCredentials: true }
+            { 
+                withCredentials: true,
+                headers: authUtils.getAuthHeaders()
+            }
         );
         
         // Remove the processed request from the list

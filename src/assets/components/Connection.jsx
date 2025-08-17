@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "../utils/connectionSlice";
 import { API_BASE_URL } from "../../config/api";
+import { authUtils } from "../../utils/auth";
 
 const Connection = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const Connection = () => {
     try {
       const res = await axios.get(`${API_BASE_URL}/user/connections`, {
         withCredentials: true,
+        headers: authUtils.getAuthHeaders()
       });
       dispatch(addConnection(res.data.data));
     } catch (error) {
