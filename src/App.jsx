@@ -9,6 +9,7 @@ import Feed from "./assets/components/Feed";
 import Connection from "./assets/components/Connection"
 import Request from "./assets/components/Request";
 import Chat from "./assets/components/Chat";
+import About from "./assets/components/About";
 
 function App(){
   return(
@@ -24,6 +25,7 @@ function App(){
               <Route path="Connection" element={<Connection/> }/>
               <Route path="Request" element={<Request/>}/>
               <Route path="Chat/:toUserId" element={<Chat/>}/>
+              <Route path="about" element={<About/>}/>
           </Route>
        </Routes>
       </BrowserRouter>

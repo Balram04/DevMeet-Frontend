@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { removeUserFeed } from "../utils/feedSlice";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { API_BASE_URL } from "../../config/api";
 import { authUtils } from "../../utils/auth";
 
@@ -38,16 +38,19 @@ const UserCard = ({ user }) => {
     setAnimationDirection(direction);
     setIsAnimating(true);
 
-    // Wait for animation to complete before making API call and removing from feed
+    // Start API call immediately (don't wait for animation)
+    const apiCall = axios.post(
+      `${API_BASE_URL}/request/send/${status}/${userId}` ,{},
+      {
+        withCredentials:true,
+        headers: authUtils.getAuthHeaders()
+      }
+    );
+
+    // Wait for animation to complete before removing from feed
     setTimeout(async () => {
       try{
-        const res =await axios.post(
-          `${API_BASE_URL}/request/send/${status}/${userId}` ,{},
-          {
-            withCredentials:true,
-            headers: authUtils.getAuthHeaders()
-          }
-        );
+        const res = await apiCall;
         
         // Only dispatch if the request was successful
         if (res.status === 200 || res.status === 201) {
@@ -70,49 +73,52 @@ const UserCard = ({ user }) => {
         setIsAnimating(false);
         setAnimationDirection('');
       }
-    }, 200); // Animation duration
+    }, 150); // Reduced animation duration for better responsiveness
   }
 
-  // Drag handlers
-  const handleDragStart = (clientX, clientY) => {
+  // Optimized drag handlers with useCallback for better performance
+  const handleDragStart = useCallback((clientX, clientY) => {
     if (isAnimating) return;
     
     setIsDragging(true);
     setStartPos({ x: clientX, y: clientY });
     setDragOffset({ x: 0, y: 0 });
     setDragDirection('');
-  };
+  }, [isAnimating]);
 
-  const handleDragMove = (clientX, clientY) => {
+  const handleDragMove = useCallback((clientX, clientY) => {
     if (!isDragging || isAnimating) return;
     
-    const deltaX = clientX - startPos.x;
-    const deltaY = clientY - startPos.y;
-    
-    setDragOffset({ x: deltaX, y: deltaY });
-    
-    // Determine drag direction and visual feedback (reduced threshold for quicker response)
-    if (Math.abs(deltaX) > 20) { // Reduced threshold for direction detection
-      if (deltaX > 0) {
-        setDragDirection('right');
+    // Use requestAnimationFrame for smoother updates
+    requestAnimationFrame(() => {
+      const deltaX = clientX - startPos.x;
+      const deltaY = clientY - startPos.y;
+      
+      setDragOffset({ x: deltaX, y: deltaY });
+      
+      // Determine drag direction and visual feedback (reduced threshold for quicker response)
+      if (Math.abs(deltaX) > 15) { // Further reduced threshold for faster direction detection
+        if (deltaX > 0) {
+          setDragDirection('right');
+        } else {
+          setDragDirection('left');
+        }
       } else {
-        setDragDirection('left');
+        setDragDirection('');
       }
-    } else {
-      setDragDirection('');
-    }
-  };
+    });
+  }, [isDragging, isAnimating, startPos]);
 
-  const handleDragEnd = () => {
+  const handleDragEnd = useCallback(() => {
     if (!isDragging || isAnimating) return;
     
-    const threshold = 60; // Further reduced threshold for easier swiping
+    const threshold = 50; // Further reduced threshold for easier swiping
     const { x } = dragOffset;
     
     if (Math.abs(x) > threshold) {
       // Add haptic feedback for mobile devices
       if (navigator.vibrate) {
-        navigator.vibrate(50); // Brief vibration
+        navigator.vibrate(30); // Shorter vibration for better performance
       }
       
       // Trigger appropriate action based on drag direction
@@ -130,7 +136,7 @@ const UserCard = ({ user }) => {
     }
     
     setIsDragging(false);
-  };
+  }, [isDragging, isAnimating, dragOffset, _id]);
 
   // Mouse event handlers
   const handleMouseDown = (e) => {
@@ -156,15 +162,17 @@ const UserCard = ({ user }) => {
     if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
       return;
     }
-    e.preventDefault();
+    // Don't prevent default to allow for better touch responsiveness
     const touch = e.touches[0];
     handleDragStart(touch.clientX, touch.clientY);
   };
 
   const handleTouchMove = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent scrolling during swipe
     const touch = e.touches[0];
-    handleDragMove(touch.clientX, touch.clientY);
+    if (touch) {
+      handleDragMove(touch.clientX, touch.clientY);
+    }
   };
 
   const handleTouchEnd = (e) => {
@@ -237,9 +245,10 @@ const UserCard = ({ user }) => {
       backgroundImage,
       transform,
       opacity,
-      transition: isAnimating ? 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 
-                  isDragging ? 'none' : 'all 0.4s ease',
+      transition: isAnimating ? 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 
+                  isDragging ? 'none' : 'all 0.2s ease-out',
       cursor: isDragging ? 'grabbing' : 'grab',
+      willChange: 'transform, opacity', // Optimize for animations
     };
   };
 

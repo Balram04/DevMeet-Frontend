@@ -143,7 +143,7 @@ const EditProfile = () => {
     }}>
       <div style={styles.wrapper}>
         <form onSubmit={handleSubmit} style={styles.card}>
-          <h2 style={styles.heading}>✨ Edit Profile</h2>
+          <h2 style={styles.heading}>Edit Profile</h2>
           
           {/* Photo Upload at the top */}
           <PhotoUpload

@@ -108,7 +108,7 @@ const Login = () => {
 
       {/* Mobile-only welcome banner with centered logo */}
       <div className="block sm:hidden relative">
-        <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 backdrop-blur-sm border-b border-gray-700/20 py-3 px-4 z-10">
+        <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 backdrop-blur-sm border-b border-gray-700/20 py-3 px-4 z-1">
           <div className="text-center">
             
             <div className="flex items-center justify-center gap-2 mb-1">
@@ -118,9 +118,7 @@ const Login = () => {
               </h3>
               <span className="text-2xl">🚀</span>
             </div>
-            <p className="text-gray-300 text-sm font-medium">
-              Your coding journey starts here ✨
-            </p>
+            
             <p className="text-blue-300 text-xs font-semibold mt-1">
               Let's connect and grow together! 🤝
             </p>

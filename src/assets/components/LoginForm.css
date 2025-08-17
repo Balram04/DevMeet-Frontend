@@ -10,20 +10,23 @@ body, html, #root {
   margin: 0;
   padding: 0;
   font-family: 'Montserrat', sans-serif;
+  background-color: bg-gradient-to-br from-gray-900 via-gray-800 to-black;
    
 }
 
 body {
   position:static;
- justify-content: center;
+  justify-content: center;
   align-items: center;
   background-color: #0d1117;
   color: #c9d1d9;
   height: 100vh;
   width: 100vw;
- 
-  
+   background: linear-gradient(to bottom right, #111827, #1F2937, #000000);
+
 }
+
+
 
 .auth-container {
    margin-bottom: 50px;
@@ -273,6 +276,7 @@ button.ghost:hover {
     margin: 0;
     height: 100vh;
     overflow-x: hidden;
+
   }
 
   .auth-container {
@@ -286,9 +290,11 @@ button.ghost:hover {
     background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #21262d 100%);
     position: relative;
     overflow: hidden;
+    
   }
 
   .form-container {
+    
     position: absolute;
     top: 0;
     left: 0;
@@ -306,6 +312,7 @@ button.ghost:hover {
   }
 
   .sign-in-container {
+    
     transform: translateY(0%);
     opacity: 1;
   }
@@ -343,6 +350,7 @@ button.ghost:hover {
     border: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
+    
   }
 
   form::before {
@@ -398,7 +406,7 @@ button.ghost:hover {
     padding: 16px 24px;
     margin-top: 24px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #238636, #2ea043);
+    background: linear-gradient(90deg, #3486e4, #126322, #d85650);
     border: none;
     color: white;
     text-transform: none;
@@ -406,7 +414,8 @@ button.ghost:hover {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-  }
+  } 
+  
 
   button::before {
     content: '';
@@ -421,6 +430,7 @@ button.ghost:hover {
 
   button:hover::before {
     left: 100%;
+   
   }
 
   button:active {
@@ -474,6 +484,10 @@ button.ghost:hover {
 }
 
 @media (max-width: 480px) {
+  body {
+    background: linear-gradient(to bottom right, #111827, #1F2937, #000000);
+  }
+
   .form-container {
     padding: 16px;
   }
@@ -508,6 +522,10 @@ button.ghost:hover {
 }
 
 @media (max-width: 360px) {
+  body {
+    background: linear-gradient(to bottom right, #111827, #1F2937, #000000);
+  }
+
   form {
     padding: 20px 16px;
   }

@@ -123,14 +123,15 @@ const styles = {
     width: '100%',
     maxWidth: '400px',
     height: '600px',
-     // Prevent cards from overflowing during animation
+    overflow: 'visible', // Allow cards to move outside during animation
   },
   cardLayer: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+    transition: 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)', // Faster, smoother transition
+    willChange: 'transform, opacity', // Optimize for animations
   }
 };
 
