@@ -9,6 +9,7 @@ import Feed from "./assets/components/Feed";
 import Connection from "./assets/components/Connection"
 import Request from "./assets/components/Request";
 import Chat from "./assets/components/Chat";
+import AuthDebugger from "./components/AuthDebugger";
 
 function App(){
   return(
@@ -27,6 +28,7 @@ function App(){
           </Route>
        </Routes>
       </BrowserRouter>
+      <AuthDebugger />
       </Provider>
 
 
