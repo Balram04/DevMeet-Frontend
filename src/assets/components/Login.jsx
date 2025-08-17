@@ -53,7 +53,7 @@ const Login = () => {
         } else {
           navigate("/feed");
         }
-      }, 1500); // Wait a bit so user sees the toast
+      }, 1000); // Wait a bit so user sees the toast
     } catch (err) {
       console.error("Login failed:", err.response?.data || err.message);
       toast.error("Login failed! Please check your credentials.");

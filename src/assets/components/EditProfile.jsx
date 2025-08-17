@@ -217,12 +217,32 @@ const EditProfile = () => {
             onFocus={(e) => e.target.style.borderColor = '#8b5cf6'}
             onBlur={(e) => e.target.style.borderColor = '#374151'}
           />
+          
           <button 
             type="submit" 
-            className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg"
+            className="px-6 py-3 text-white font-semibold rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg"
+            style={{
+              background: 'linear-gradient(90deg, #3486e4, #126322, #d85650)',
+              backgroundSize: isMobile ? '100% 100%' : '200% 100%',
+              transition: 'all 0.3s ease',
+              backgroundPosition: '0% 0',
+              width: '100%',
+            }}
+            onMouseEnter={(e) => {
+              if (!isMobile) {
+                e.target.style.backgroundPosition = '100% 0';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isMobile) {
+                e.target.style.backgroundPosition = '0% 0';
+              }
+            }}
           >
-            💾 Save Profile
+            💾 Save
+             Profile
           </button>
+        
           {message && <p style={styles.message}>{message}</p>}
         </form>
       </div>
@@ -255,8 +275,8 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
-    padding: "20px",
-    gap: "30px",
+    padding: window.innerWidth < 768 ? "10px" : "20px", // Less padding on mobile
+    gap: window.innerWidth < 768 ? "20px" : "30px", // Less gap on mobile
     overflow: "auto",
   },
   wrapper: {
@@ -276,7 +296,7 @@ const styles = {
     top: "20px",
   },
   card: {
-    background: "rgba(31, 41, 55, 0.6)",
+    background: "rgba(31, 41, 55, 0.85)", // Increased opacity for better text visibility
     backdropFilter: "blur(12px)",
     padding: "24px",
     borderRadius: "16px",
@@ -287,18 +307,21 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     border: "1px solid rgba(55, 65, 81, 0.5)",
-    maxHeight: "85vh",
+    maxHeight: window.innerWidth < 768 ? "90vh" : "85vh", // More height on mobile
     overflowY: "auto",
+    paddingBottom: window.innerWidth < 768 ? "80px" : "24px", // Extra bottom padding on mobile
   },
   heading: {
-    marginBottom: "24px",
-    fontSize: "1.5rem",
-    textAlign: "center",
-    background: "linear-gradient(to right, #60a5fa, #a78bfa, #f472b6)",
-    backgroundClip: "text",
-    color: "transparent",
-    fontWeight: "bold",
+  fontSize: "1.5rem",
+  textAlign: "center",
+  background: "linear-gradient(to right, #60a5fa, #a78bfa, #f472b6)",
+  WebkitBackgroundClip: "text",   // ✅ mobile fix
+  WebkitTextFillColor: "transparent", // ✅ mobile fix
+  backgroundClip: "text",
+  color: "transparent",
+  fontWeight: "600",
   },
+
   input: {
     padding: "12px 16px",
     marginBottom: "16px",

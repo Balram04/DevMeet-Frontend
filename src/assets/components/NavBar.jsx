@@ -40,7 +40,32 @@ const NavBar = () => {
     <>
      <div className="navbar bg-gray-800/90 backdrop-blur-sm border-b border-gray-700/50 shadow-lg mx-auto relative z-[10000]">
   <div className={`flex-1 sm:flex-1 flex ${isLoginPage ? 'justify-center sm:justify-center' : 'justify-start sm:justify-start'}`}>
-     <a  href="/feed" className="btn btn-ghost text-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 rounded-xl">✨DevMeet</a> 
+     <a href="/feed" className="group relative flex items-center space-x-2 py-2 px-4 rounded-2xl bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-cyan-500/20 backdrop-blur-lg border border-white/10 hover:border-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25">
+       
+      
+       
+       {/* Logo Text with Enhanced Styling */}
+       <div className="relative">
+         <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent group-hover:from-purple-300 group-hover:via-blue-300 group-hover:to-cyan-300 transition-all duration-300">
+           Dev
+         </span>
+         <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent group-hover:from-cyan-300 group-hover:via-blue-300 group-hover:to-purple-300 transition-all duration-300">
+           Meet
+         </span>
+         
+         {/* Animated Underline */}
+         <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-cyan-400 group-hover:w-full transition-all duration-500"></div>
+         
+         {/* Floating Particles */}
+         <div className="absolute -top-1 -right-1 w-1 h-1 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300"></div>
+         <div className="absolute -bottom-1 -left-1 w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300 delay-150"></div>
+       </div>
+       
+       {/* Sparkle Effect */}
+       <div className="absolute top-1 right-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+         ✨
+       </div>
+     </a> 
   </div>
   <div className={`flex gap-4 ${isLoginPage ? 'absolute right-4 sm:absolute sm:right-4' : 'absolute right-4 sm:relative sm:right-auto'}`}>
           
