@@ -223,10 +223,12 @@ const EditProfile = () => {
             className="px-6 py-3 text-white font-semibold rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg"
             style={{
               background: 'linear-gradient(90deg, #3486e4, #126322, #d85650)',
-              backgroundSize: isMobile ? '100% 100%' : '200% 100%',
+              backgroundSize: isMobile ? '% 100%' : '200% 100%',
               transition: 'all 0.3s ease',
               backgroundPosition: '0% 0',
               width: '100%',
+               paddingBottom: isMobile ? '35px' : '10px',
+
             }}
             onMouseEnter={(e) => {
               if (!isMobile) {
