@@ -56,7 +56,25 @@ const Login = () => {
       }, 1000); // Wait a bit so user sees the toast
     } catch (err) {
       console.error("Login failed:", err.response?.data || err.message);
-      toast.error("Login failed! Please check your credentials.");
+      
+      // Handle detailed error responses from backend
+      const errorData = err.response?.data;
+      
+      if (errorData?.toast) {
+        // Use the toast-friendly message from backend
+        toast.error(errorData.toast);
+      } else if (errorData?.message) {
+        // Use the main error message
+        toast.error(errorData.message);
+      } else {
+        // Fallback to generic message
+        toast.error("Login failed! Please check your credentials.");
+      }
+
+      // Log detailed error info for debugging
+      if (errorData?.requirements && errorData.requirements.length > 0) {
+        console.log("Password requirements missing:", errorData.requirements);
+      }
     }
   };
 
@@ -90,7 +108,20 @@ const Login = () => {
       
     } catch (err) {
       console.error("Signup failed:", err.response?.data || err.message);
-      toast.error(err.response?.data?.message || "Signup failed! Please try again.");
+      
+      // Handle detailed error responses from backend
+      const errorData = err.response?.data;
+      
+      if (errorData?.toast) {
+        // Use the toast-friendly message from backend
+        toast.error(errorData.toast);
+      } else if (errorData?.message) {
+        // Use the main error message
+        toast.error(errorData.message);
+      } else {
+        // Fallback to generic message
+        toast.error("Signup failed! Please try again.");
+      }
     }
   };
 
@@ -173,11 +204,14 @@ const Login = () => {
           <input 
             type="password" 
             name="password"
-            placeholder="Password (min 6 characters)" 
+            placeholder="Password" 
             value={signupData.password}
             onChange={handleSignupChange}
             required 
           />
+          <p className="password-hint">
+            Use at least 6 characters with uppercase, lowercase, number & special character
+          </p>
 
           <p className="mobile-toggle">
             Already have an account?{" "}
