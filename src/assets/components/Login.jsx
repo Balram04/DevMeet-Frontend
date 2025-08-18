@@ -53,7 +53,7 @@ const Login = () => {
         } else {
           navigate("/feed");
         }
-      }, 1000); // Wait a bit so user sees the toast
+      }, 500); // Wait a bit so user sees the toast
     } catch (err) {
       console.error("Login failed:", err.response?.data || err.message);
       
@@ -120,7 +120,7 @@ const Login = () => {
         toast.error(errorData.message);
       } else {
         // Fallback to generic message
-        toast.error("Signup failed! Please try again.");
+        toast.error("Signup failed! Please use Uppercase , Lowercase , Numbers and Special Characters.");
       }
     }
   };
@@ -248,7 +248,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <a href="#" className="forgot">
+          <a href="" className="forgot">
             Forgot password?
           </a>
 

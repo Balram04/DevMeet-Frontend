@@ -39,7 +39,7 @@ const UserCard = ({ user }) => {
     setIsAnimating(true);
 
     // Start API call immediately (don't wait for animation)
-    const apiCall = axios.post(
+    const apiCall = axios.  post(
       `${API_BASE_URL}/request/send/${status}/${userId}` ,{},
       {
         withCredentials:true,
@@ -64,7 +64,6 @@ const UserCard = ({ user }) => {
         // If the connection already exists, remove the user from feed anyway
         if (err.response?.status === 400 && err.response?.data?.message?.includes("already")) {
           dispatch(removeUserFeed(userId));
-          console.log("Connection already exists, removing user from feed");
         }
         // You might want to show a user-friendly error message here
       }
@@ -73,7 +72,7 @@ const UserCard = ({ user }) => {
         setIsAnimating(false);
         setAnimationDirection('');
       }
-    }, 150); // Reduced animation duration for better responsiveness
+    }, 50); // Reduced animation duration for better responsiveness
   }
 
   // Optimized drag handlers with useCallback for better performance
