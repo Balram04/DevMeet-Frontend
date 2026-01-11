@@ -113,137 +113,115 @@ useEffect(() => {
         )}
         
         {/* Requests Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {requests && requests.map((request, index) => {
             const { _id, fromUserId } = request;
-            const { firstname, lastname, photoUrl, age, gender, about } = fromUserId;
+            const { firstname, lastname, photoUrl, wantsToLearn, canTeach } = fromUserId;
             return (
               <div
                 key={_id}
-                className="rounded-2xl p-6 shadow-2xl transition-all duration-300 card-animation"
-                style={{ 
-                  animationDelay: `${index * 0.1}s`,
-                  background: 'linear-gradient(135deg, #374151 0%, #1f2937 50%, #111827 100%)',
-                  border: '2px solid transparent',
-                  backgroundImage: 'linear-gradient(135deg, #374151 0%, #1f2937 50%, #111827 100%), linear-gradient(135deg, #4f46e5, #06b6d4, #10b981)',
-                  backgroundOrigin: 'border-box',
-                  backgroundClip: 'padding-box, border-box',
-                  backdropFilter: 'blur(10px)',
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-5px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 35px 60px -12px rgba(0, 0, 0, 0.7), 0 0 40px rgba(79, 70, 229, 0.3)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05)';
-                }}
+                className="group bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 shadow-xl border-2 border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-300 card-animation hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="flex items-start space-x-6">
-                  {/* Profile Image */}
-                  <div className="relative flex-shrink-0">
-                    <div 
-                      className="w-20 h-20 rounded-full p-1 transition-all duration-300"
-                      style={{
-                        background: 'linear-gradient(135deg, #4f46e5, #06b6d4, #10b981, #f59e0b)',
-                        animation: 'gradient-shift 3s ease-in-out infinite'
-                      }}
-                    >
+                {/* Profile Section */}
+                <div className="flex flex-col items-center mb-6 transition-all duration-300">
+                  <div className="relative mb-4 transition-transform duration-300 group-hover:scale-95">
+                    <div className="w-24 h-24 rounded-full p-1 bg-gradient-to-br from-purple-500 via-blue-500 to-cyan-500">
                       <img
-                        alt="profile"
-                        className="w-full h-full rounded-full object-cover"
-                        src={photoUrl || "https://via.placeholder.com/80"}
-                        style={{
-                          border: '2px solid #1f2937'
-                        }}
+                        alt={`${firstname} ${lastname}`}
+                        className="w-full h-full rounded-full object-cover border-4 border-gray-900"
+                        src={photoUrl || "https://via.placeholder.com/96"}
                       />
                     </div>
-                    <div 
-                      className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-2 flex items-center justify-center"
-                      style={{
-                        background: 'linear-gradient(135deg, #10b981, #059669)',
-                        borderColor: '#1f2937',
-                        boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)'
-                      }}
-                    >
-                      <span className="text-xs">👋</span>
+                    <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 rounded-full border-4 border-gray-900 flex items-center justify-center">
+                      <span className="text-sm">👋</span>
                     </div>
                   </div>
-                  
-                  {/* User Info */}
-                  <div className="flex-grow min-w-0">
-                    <h2 className="text-white font-bold text-xl mb-2 truncate">
-                      {firstname} {lastname}
-                    </h2>
-                    {age && gender && (
-                      <div className="flex items-center mb-3">
-                        <span 
-                          className="px-3 py-1 text-sm font-medium text-white rounded-full"
-                          style={{
-                            background: 'linear-gradient(135deg, #4f46e5, #06b6d4)',
-                            boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)',
-                            border: '1px solid rgba(255, 255, 255, 0.1)'
-                          }}
-                        >
-                          {age}, {gender}
-                        </span>
+                  <h3 className="text-white font-bold text-xl text-center">
+                    {firstname} {lastname}
+                  </h3>
+                </div>
+
+                {/* Skills Section - Hidden initially, shown on hover */}
+                <div className="space-y-4 mb-6 transition-all duration-500 overflow-hidden">
+                  {/* Want to Learn */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-blue-400 text-sm">🎯</span>
+                      <h4 className="text-blue-400 font-semibold text-sm">Wants to Learn</h4>
+                    </div>
+                    {wantsToLearn && wantsToLearn.length > 0 ? (
+                      <div className="flex flex-wrap gap-2">
+                        {wantsToLearn.slice(0, 3).map((skill, idx) => (
+                          <span
+                            key={idx}
+                            className="px-3 py-1 text-xs font-medium text-white bg-blue-500/20 border border-blue-500/30 rounded-full"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                        {wantsToLearn.length > 3 && (
+                          <span className="px-3 py-1 text-xs font-medium text-blue-400">
+                            +{wantsToLearn.length - 3}
+                          </span>
+                        )}
                       </div>
+                    ) : (
+                      <p className="text-gray-500 text-xs italic">Not specified</p>
                     )}
-                    <p className="text-gray-300 text-sm leading-relaxed line-clamp-3">
-                      {about || "No description available"}
-                    </p>
+                  </div>
+
+                  {/* Can Teach */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-green-400 text-sm">🎓</span>
+                      <h4 className="text-green-400 font-semibold text-sm">Can Teach</h4>
+                    </div>
+                    {canTeach && canTeach.length > 0 ? (
+                      <div className="flex flex-wrap gap-2">
+                        {canTeach.slice(0, 3).map((skill, idx) => (
+                          <span
+                            key={idx}
+                            className="px-3 py-1 text-xs font-medium text-white bg-green-500/20 border border-green-500/30 rounded-full"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                        {canTeach.length > 3 && (
+                          <span className="px-3 py-1 text-xs font-medium text-green-400">
+                            +{canTeach.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 text-xs italic">Not specified</p>
+                    )}
                   </div>
                 </div>
-                
+
                 {/* Action Buttons */}
-                <div 
-                  className="flex space-x-3 mt-6 pt-4"
-                  style={{
-                    borderTop: '1px solid rgba(255, 255, 255, 0.1)'
-                  }}
-                >
+                <div className="flex justify-center gap-3">
                   <button 
-                    className="flex-1 px-6 py-3 text-white font-semibold rounded-xl transition-all duration-300"
-                    style={{
-                      background: 'linear-gradient(135deg, #10b981, #059669, #047857)',
-                      boxShadow: '0 8px 25px rgba(16, 185, 129, 0.4)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-2px) scale(1.05)';
-                      e.target.style.boxShadow = '0 12px 35px rgba(16, 185, 129, 0.6)';
-                      e.target.style.background = 'linear-gradient(135deg, #059669, #047857, #065f46)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0) scale(1)';
-                      e.target.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.4)';
-                      e.target.style.background = 'linear-gradient(135deg, #10b981, #059669, #047857)';
-                    }}
+                    className="px-2 py-1.5 bg-green-600 hover:bg-green-700 sm:bg-emerald-600/90 sm:hover:bg-emerald-500 text-white text-xs sm:text-sm font-medium rounded-md sm:rounded-lg transition-all duration-200 sm:hover:scale-105 active:scale-95 sm:shadow-lg sm:shadow-emerald-900/50 sm:hover:shadow-emerald-500/50 sm:border sm:border-emerald-500/30 sm:backdrop-blur-sm"
                     onClick={() => handleRequest("accepted", _id)}
                   >
-                    ✓ Accept
+                    <span className="flex items-center gap-1.5">
+                      <svg className="w-2 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Accept</span>
+                    </span>
                   </button>
                   <button 
-                    className="flex-1 px-6 py-3 text-white font-semibold rounded-xl transition-all duration-300"
-                    style={{
-                      background: 'linear-gradient(135deg, #ef4444, #dc2626, #b91c1c)',
-                      boxShadow: '0 8px 25px rgba(239, 68, 68, 0.4)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-2px) scale(1.05)';
-                      e.target.style.boxShadow = '0 12px 35px rgba(239, 68, 68, 0.6)';
-                      e.target.style.background = 'linear-gradient(135deg, #dc2626, #b91c1c, #991b1b)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0) scale(1)';
-                      e.target.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.4)';
-                      e.target.style.background = 'linear-gradient(135deg, #ef4444, #dc2626, #b91c1c)';
-                    }}
+                    className="px-2 py-1.5 bg-gray-600 hover:bg-gray-700 sm:bg-gray-700/90 sm:hover:bg-gray-600 text-white text-xs sm:text-sm font-medium rounded-md sm:rounded-lg transition-all duration-200 sm:hover:scale-105 active:scale-95 sm:shadow-lg sm:shadow-gray-900/50 sm:hover:shadow-gray-500/30 sm:border sm:border-gray-600/30 sm:backdrop-blur-sm"
                     onClick={() => handleRequest("rejected", _id)}
                   >
-                    ✗ Reject
+                    <span className="flex items-center gap-1.5">
+                      <svg className="w-2 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      <span>Reject</span>
+                    </span>
                   </button>
                 </div>
               </div>

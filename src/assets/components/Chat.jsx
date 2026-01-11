@@ -41,18 +41,13 @@ const Chat = () => {
                     headers: authUtils.getAuthHeaders()
                 });
                 
-                console.log('API Response:', response.data);
-                
                 const userData = response.data.user || response.data;
                 setTargetUser({
                     ...userData,
                     isOnline: Math.random() > 0.5 // Random online status for demo
                 });
                 
-                console.log('Target user set:', userData);
             } catch (err) {
-                console.error('Error fetching target user:', err);
-                console.error('Error details:', err.response?.data || err.message);
                 
                 setError('Failed to load user details');
                 // Fallback to basic info
@@ -64,7 +59,6 @@ const Chat = () => {
                     isOnline: false,
                 });
                 
-                console.log('Using fallback user data');
             } finally {
                 setLoading(false);
             }
@@ -82,13 +76,11 @@ const Chat = () => {
         setSocket(socketInstance);
         
         socketInstance.on('connect', () => {
-            console.log('Connected to server');
             socketInstance.emit("joinRoom", {userId, targetUserId});
         });
 
         // Listen for incoming messages
         socketInstance.on('receiveMessage', (messageData) => {
-            console.log('Received message:', messageData);
             setChatMessages(prev => {
                 const newMessages = [...prev, {
                     id: Date.now(),

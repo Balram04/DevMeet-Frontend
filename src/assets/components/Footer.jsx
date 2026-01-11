@@ -10,12 +10,24 @@ const Footer = () => {
             {/* Brand Section */}
             <div className="text-center md:text-left">
               <h3 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2">
-               <a href="/About">🚀 DevMeet</a>
+               <a href="/About"> DevMeet</a>
               </h3>
-              <p className="text-gray-300 text-sm">
-                Connect with developers worldwide
-              </p>
-            </div>
+              
+              <div className="  flex items-center justify-center md:justify-start gap-3 text-sm font-medium">
+                <span className="flex items-center gap-1 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  <span className="text-base">🤝</span>Connect
+                </span>
+                <span className="text-gray-500">•</span>
+                <span className="flex items-center gap-1 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  <span className="text-base">📚</span>Learn
+                </span>
+                <span className="text-gray-500">•</span>
+                <span className="flex items-center gap-1 bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
+                  <span className="text-base">🚀</span>Grow
+                </span>
+              </div>
+              </div>
+            
 
             {/* Social Links */}
             <div className="flex space-x-3">
@@ -45,10 +57,21 @@ const Footer = () => {
               <p className="text-gray-400 text-xs mb-2 md:mb-0">
                 © {new Date().getFullYear()} DevMeet. All rights reserved.
               </p>
-              <div className="flex space-x-4 text-xs">
+              <div className="flex items-center space-x-4 text-xs">
                 <a href="/About" className="text-gray-400 hover:text-white transition-colors">Privacy</a>
                 <a href="/About" className="text-gray-400 hover:text-white transition-colors">Terms</a>
                 <a href="/About" className="text-gray-400 hover:text-white transition-colors">Support</a>
+                {/* Admin Access Button */}
+                <a 
+                  href="/admin/login" 
+                  className="ml-2 bg-gradient-to-r from-purple-600/80 to-blue-600/80 hover:from-purple-700 hover:to-blue-700 text-white px-3 py-1 rounded-lg text-xs font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 flex items-center gap-1"
+                  title="Admin Portal"
+                >
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  Admin
+                </a>
               </div>
             </div>
           </div>

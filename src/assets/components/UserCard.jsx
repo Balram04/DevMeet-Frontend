@@ -6,7 +6,6 @@ import { API_BASE_URL } from "../../config/api";
 import { authUtils } from "../../utils/auth";
 
 const UserCard = ({ user }) => {
-  console.log("Single user received:", user);
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationDirection, setAnimationDirection] = useState('');
   
@@ -26,7 +25,7 @@ const UserCard = ({ user }) => {
     );
   }
 
-  const { _id,firstname, lastname, photoUrl, age, gender, about,skills } = user;
+  const { _id, firstname, lastname, photoUrl, about, wantsToLearn, canTeach } = user;
   const dispatch =useDispatch();
 
   const handleSendRequest= async(status, userId)=>{
@@ -55,11 +54,9 @@ const UserCard = ({ user }) => {
         // Only dispatch if the request was successful
         if (res.status === 200 || res.status === 201) {
           dispatch(removeUserFeed(userId));
-          console.log(`Request ${status} sent successfully`);
         }
       }
       catch(err){
-        console.error("Error sending request:", err);
         
         // If the connection already exists, remove the user from feed anyway
         if (err.response?.status === 400 && err.response?.data?.message?.includes("already")) {
@@ -323,10 +320,10 @@ const UserCard = ({ user }) => {
         <div style={styles.imageContainer}>
           <div 
             style={{
-              width: "150px",
-              height: "150px",
+              width: "140px",
+              height: "140px",
               borderRadius: "50%",
-              padding: "4px",
+              padding: "3px",
               background: 'linear-gradient(135deg, #4f46e5, #06b6d4, #10b981, #f59e0b)',
               boxShadow: "0 8px 25px rgba(79, 70, 229, 0.4)"
             }}
@@ -344,14 +341,41 @@ const UserCard = ({ user }) => {
             />
           </div>
         </div>
-        <h2 style={styles.name}>
+        <h2 style={{...styles.name, fontSize: "1.25rem"}}>
           {firstname || "No Name"} {lastname || ""}
         </h2>
-        <div style={styles.infoGroup}>
-          <p><span>Age:</span> {age || "Not specified"}</p>
-          <p><span>Gender:</span> {gender || "Not specified"}</p>
-        </div>
-        <p style={styles.about}><span>About:</span> {about || "No description available"}</p>
+        
+        {about && (
+          <p style={{...styles.about, fontSize: "0.85rem", padding: "0 8px", marginBottom: "16px"}}>
+            <span style={{fontWeight: '600', color: '#a78bfa'}}>About:</span> {about}
+          </p>
+        )}
+        
+        {wantsToLearn && wantsToLearn.length > 0 && (
+          <div style={{...styles.skillSection, marginBottom: "12px", padding: "0 8px"}}>
+            <p style={{...styles.skillLabel, fontSize: "0.8rem"}}>📚 Want to Learn:</p>
+            <div style={styles.skillTags}>
+              {wantsToLearn.map((skill, index) => (
+                <span key={index} style={{...styles.skillTag, padding: "4px 10px", fontSize: "0.75rem"}}>
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {canTeach && canTeach.length > 0 && (
+          <div style={{...styles.skillSection, marginBottom: "12px", padding: "0 8px"}}>
+            <p style={{...styles.skillLabel, fontSize: "0.8rem"}}>🎓 Can Teach:</p>
+            <div style={styles.skillTags}>
+              {canTeach.map((skill, index) => (
+                <span key={index} style={{...styles.skillTag, background: 'linear-gradient(135deg, #059669, #047857)', borderColor: '#10b981', padding: "4px 10px", fontSize: "0.75rem"}}>
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div style={styles.buttonContainer}>
           <button 
@@ -428,19 +452,18 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     padding: "0",
-    
   },
   card: {
     background: 'linear-gradient(135deg, #374151 0%, #1f2937 50%, #111827 100%)',
     color: "#fff",
-    padding: "24px",
+    padding: "16px",
     borderRadius: "16px",
     boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05)",
     textAlign: "center",
     width: "100%",
     maxWidth: "350px",
     height: "auto",
-    minHeight: "500px",
+    minHeight: "480px",
     transition: "all 0.3s ease",
     position: "relative",
     overflow: "hidden",
@@ -463,6 +486,32 @@ const styles = {
     marginBottom: "12px",
     fontSize: "1.5rem",
     fontWeight: "600",
+  },
+  skillSection: {
+    marginBottom: "16px",
+    textAlign: "left",
+    padding: "0 10px",
+  },
+  skillLabel: {
+    fontSize: "0.9rem",
+    fontWeight: "600",
+    color: "#60a5fa",
+    marginBottom: "8px",
+  },
+  skillTags: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "8px",
+  },
+  skillTag: {
+    padding: "6px 12px",
+    fontSize: "0.8rem",
+    background: "linear-gradient(135deg, #4f46e5, #06b6d4)",
+    borderRadius: "20px",
+    border: "1px solid rgba(79, 70, 229, 0.5)",
+    color: "#fff",
+    fontWeight: "500",
+    boxShadow: "0 2px 8px rgba(79, 70, 229, 0.3)",
   },
   infoGroup: {
     marginBottom: "12px",

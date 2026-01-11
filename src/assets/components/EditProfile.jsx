@@ -14,10 +14,9 @@ const EditProfile = () => {
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
-    age: "",
-    gender: "",
     about: "",
-    skills: "",
+    wantsToLearn: "",
+    canTeach: "",
     photoUrl: "",
   });
 
@@ -45,15 +44,13 @@ const EditProfile = () => {
         setFormData({
           firstname: user.firstname || "",
           lastname: user.lastname || "",
-          age: user.age || "",
-          gender: user.gender || "",
           about: user.about || "",
-          skills: user.skills?.join(", ") || "",
+          wantsToLearn: user.wantsToLearn?.join(", ") || "",
+          canTeach: user.canTeach?.join(", ") || "",
           photoUrl: user.photoUrl || "",
         });
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching user data:", err);
         setMessage("❌ Failed to load user data.");
         setLoading(false);
       }
@@ -71,15 +68,11 @@ const EditProfile = () => {
   };
 
   const saveProfile = async () => {
-    console.log("Starting profile update...");
-    console.log("Form data being sent:", formData);
-    
     const updatedData = {
       ...formData,
-      skills: formData.skills.split(",").map((s) => s.trim()),
+      wantsToLearn: formData.wantsToLearn.split(",").map((s) => s.trim()).filter(Boolean),
+      canTeach: formData.canTeach.split(",").map((s) => s.trim()).filter(Boolean),
     };
-    
-    console.log("Processed data for API:", updatedData);
 
     try {
       const res = await axios.patch(
@@ -91,7 +84,6 @@ const EditProfile = () => {
         }
       );
       
-      console.log("API Response:", res.data);
       setMessage("✅ Profile updated successfully!");
       toast.success(`${res.data.user.firstname} profile updated Successfully! 🎉`);
       Navigate("/feed")
@@ -101,17 +93,13 @@ const EditProfile = () => {
       setFormData({
         firstname: updatedUser.firstname || "",
         lastname: updatedUser.lastname || "",
-        age: updatedUser.age || "",
-        gender: updatedUser.gender || "",
         about: updatedUser.about || "",
-        skills: updatedUser.skills?.join(", ") || "",
+        wantsToLearn: updatedUser.wantsToLearn?.join(", ") || "",
+        canTeach: updatedUser.canTeach?.join(", ") || "",
         photoUrl: updatedUser.photoUrl || "",
       });
       dispatch(addUser(updatedUser));
     } catch (err) {
-      console.error("Full error object:", err);
-      console.error("Error response:", err.response);
-      console.error("Error data:", err.response?.data);
       setMessage("❌ Failed to update profile: " + (err.response?.data?.message || err.message));
     }
   };
@@ -172,47 +160,38 @@ const EditProfile = () => {
             onFocus={(e) => e.target.style.borderColor = '#8b5cf6'}
             onBlur={(e) => e.target.style.borderColor = '#374151'}
           />
-          <input 
-            type="number" 
-            name="age" 
-            value={formData.age} 
+          
+          <textarea 
+            name="about" 
+            value={formData.about} 
             onChange={handleChange} 
-            placeholder="Age" 
+            placeholder="About You (max 150 characters)" 
+            style={styles.textarea}
+            maxLength={150}
+            onFocus={(e) => e.target.style.borderColor = '#8b5cf6'}
+            onBlur={(e) => e.target.style.borderColor = '#374151'}
+          />
+          <div style={{fontSize: '12px', color: '#9ca3af', marginTop: '-12px', marginBottom: '12px', textAlign: 'right'}}>
+            {formData.about.length}/150
+          </div>
+
+          <input 
+            type="text" 
+            name="wantsToLearn" 
+            value={formData.wantsToLearn} 
+            onChange={handleChange} 
+            placeholder="Want to Learn (comma-separated)" 
             style={styles.input}
             onFocus={(e) => e.target.style.borderColor = '#8b5cf6'}
             onBlur={(e) => e.target.style.borderColor = '#374151'}
           />
-         <select
-  name="gender"
-  value={formData.gender}
-  onChange={handleChange}
-  style={styles.input}
-  onFocus={(e) => e.target.style.borderColor = '#8b5cf6'}
-  onBlur={(e) => e.target.style.borderColor = '#374151'}
->
-  <option value="" disabled>Select Gender</option>
-  <option value="Male">Male</option>
-  <option value="Female">Female</option>
-  <option value="Other">Other</option>
-</select>
-
-          <textarea 
-  name="about" 
-  value={formData.about} 
-  onChange={handleChange} 
-  placeholder="About You" 
-  style={styles.textarea}
-  maxLength={30} // Limits input to 30 characters
-  onFocus={(e) => e.target.style.borderColor = '#8b5cf6'}
-  onBlur={(e) => e.target.style.borderColor = '#374151'}
-/>
-
+          
           <input 
             type="text" 
-            name="skills" 
-            value={formData.skills} 
+            name="canTeach" 
+            value={formData.canTeach} 
             onChange={handleChange} 
-            placeholder="skills (comma-separated)" 
+            placeholder="Skills Can Teach (comma-separated)" 
             style={styles.input}
             onFocus={(e) => e.target.style.borderColor = '#8b5cf6'}
             onBlur={(e) => e.target.style.borderColor = '#374151'}
@@ -259,10 +238,9 @@ const EditProfile = () => {
             firstname: formData.firstname,
             lastname: formData.lastname,
             photoUrl: formData.photoUrl || "",
-            age: formData.age,
-            gender: formData.gender,
             about: formData.about,
-            skills: formData.skills.split(",").map((s) => s.trim()).filter(Boolean)
+            wantsToLearn: formData.wantsToLearn.split(",").map((s) => s.trim()).filter(Boolean),
+            canTeach: formData.canTeach.split(",").map((s) => s.trim()).filter(Boolean)
           }} />
         </div>
       </div>

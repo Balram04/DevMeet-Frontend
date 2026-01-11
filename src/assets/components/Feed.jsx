@@ -23,7 +23,7 @@ const Feed = () => {
       dispatch(addFeed(res.data));
     }
     catch (err) {
-      console.log("API Error:", err);
+      // Error fetching feed
     }
     finally {
       setIsLoading(false);
@@ -59,7 +59,7 @@ const Feed = () => {
         <p className="text-gray-400 mb-6">Check back later for new connections!</p>
         <button 
           onClick={handleRefreshFeed}
-          className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 sm:px-6 sm:py-3 sm:bg-gradient-to-r sm:from-blue-500 sm:to-purple-600 sm:hover:from-blue-600 sm:hover:to-purple-700 text-white font-semibold rounded-lg sm:rounded-xl transition-all duration-300 sm:shadow-lg text-sm sm:text-base"
         >
           🔄 Refresh Feed
         </button>
@@ -71,8 +71,8 @@ const Feed = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex flex-col justify-center items-center p-5 static overflow-hidden">
       {/* Instructions - Show only for the very first card (when all users are present) */}
       {feed.users.length === (feed.totalUsers || feed.users.length) && (
-        <span className=" mt-18 absolute top-1 left-1/2 transform -translate-x-1/2 text-gray-400 text-xs sm:text-sm text-center bg-gray-800/80 backdrop-blur-sm px-2 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-gray-700/50 max-w-xs sm:max-w-none">
-          <p className="whitespace-nowrap sm:whitespace-normal">
+        <span className="mt-16 sm:mt-18 absolute top-1 left-1/2 transform -translate-x-1/2 text-gray-400 text-[10px] sm:text-xs md:text-sm text-center bg-gray-800/80 backdrop-blur-sm px-2 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-3 rounded-lg sm:rounded-xl md:rounded-2xl border border-gray-700/50 max-w-[85%] sm:max-w-xs md:max-w-none z-10">
+          <p className="whitespace-nowrap sm:whitespace-normal leading-tight sm:leading-normal">
             <span className="hidden sm:inline">🖱️ Drag left to ignore 😐Drag right to like ❤️</span>
             <span className="sm:hidden">👈 Swipe to Ignore | Swipe to Like 👉</span>
           </p>
@@ -98,15 +98,15 @@ const Feed = () => {
         
         {/* Show card count indicator */}
         {feed.users.length > 1 && (
-          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400 text-sm text-center">
+          <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400 text-xs sm:text-sm text-center">
             {feed.users.length} Users remaining
           </div>
         )}
         
         {/* Auto-refresh when low on cards */}
         {feed.users.length <= 2 && !isLoading && (
-          <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 text-center w-48">
-            <p className="text-yellow-400 mb-3">
+          <div className="absolute -bottom-16 sm:-bottom-20 left-1/2 transform -translate-x-1/2 text-center w-36 sm:w-48">
+            <p className="text-yellow-400 text-xs sm:text-sm mb-2 sm:mb-3">
               ⚠️ Few users left!
             </p>
            
@@ -122,7 +122,8 @@ const styles = {
     position: 'relative',
     width: '100%',
     maxWidth: '400px',
-    height: '600px',
+    height: 'auto',
+    minHeight: '500px',
     overflow: 'visible', // Allow cards to move outside during animation
   },
   cardLayer: {

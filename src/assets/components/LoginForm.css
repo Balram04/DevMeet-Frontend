@@ -547,3 +547,345 @@ button.ghost:hover {
     padding: 12px 16px;
   }
 }
+
+/* OTP Modal Styles */
+.otp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.otp-modal-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #3b2667 50%, #1a1a2e 100%);
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  max-width: 28rem;
+  width: 100%;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.otp-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.otp-close-btn:hover {
+  color: #ffffff;
+}
+
+.otp-close-btn svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.otp-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.otp-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.otp-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #d5d1df, #da8888);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.otp-subtitle {
+  color: #d1d5db;
+  margin-top: 0.5rem;
+}
+
+.otp-email {
+  color: #baa748;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.otp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-radius: 400px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #3b2667 50%, #1a1a2e 100%);
+}
+
+
+.otp-label {
+  display: block;
+  color: #cdd2db;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.otp-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: rgba(55, 65, 81, 0.5);
+  border: 1px solid #4b5563;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  text-align: center;
+  font-size: 2rem;
+  letter-spacing: 0.5rem;
+  outline: none;
+  transition: all 0.2s;
+  
+}
+
+.otp-input:focus {
+  outline: none;
+  kerning: 2px;
+  lighting-color: #a78bfa;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px #a78bfa;
+  
+}
+
+.otp-hint {
+  color: #9ca3af;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  
+}
+
+.otp-verify-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to right, #6e549a, #1d62f5);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  transform: scale(1);
+}
+
+.otp-verify-btn:hover:not(:disabled) {
+  background: linear-gradient(to right, #6d28d9, #1d4ed8);
+  transform: scale(1.05);
+}
+
+.otp-verify-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+.otp-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.otp-loading svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.otp-resend-container {
+  text-align: center;
+}
+
+.otp-resend-btn {
+  color: #a78bfa;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.otp-resend-btn:hover:not(:disabled) {
+  color: #c4b5fd;
+}
+
+.otp-resend-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.otp-timer {
+  color: #9ca3af;
+  font-size: 0.75rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* Responsive adjustments for OTP modal */
+@media (max-width: 640px) {
+  .otp-modal-content {
+    padding: 1.5rem;
+  }
+
+  .otp-title {
+    font-size: 1.5rem;
+  }
+
+  .otp-icon {
+    font-size: 3rem;
+  }
+
+  .otp-input {
+    font-size: 1.5rem;
+  }
+}
+
+/* Forgot/Reset Password Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Hover effects for forgot password links */
+.forgot {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.forgot::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 50%;
+  background-color: #58a6ff;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.forgot:hover::after {
+  width: 100%;
+}
+
+/* Button hover enhancements */
+button:not(:disabled):hover {
+  background: #2ea043;
+  box-shadow: 0 4px 12px rgba(35, 134, 54, 0.4);
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #30363d;
+}
+
+/* Mobile responsive for forgot/reset password */
+@media (max-width: 900px) {
+  .auth-container {
+    flex-direction: column;
+  }
+  
+  .form-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: static !important;
+  }
+  
+  .overlay-container {
+    display: none !important;
+  }
+}
+

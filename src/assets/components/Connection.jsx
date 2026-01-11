@@ -129,7 +129,7 @@ const Connection = () => {
                 <div className="flex justify-center">
                   <button
                     onClick={() => (window.location.href = `chat/${_id}`)}
-                    className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-semibold rounded-lg sm:rounded-xl hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 group-hover:shadow-purple-500/25 text-sm sm:text-base"
+                    className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 sm:px-6 sm:py-3 sm:bg-gradient-to-r sm:from-blue-500 sm:via-purple-500 sm:to-pink-500 sm:hover:from-blue-600 sm:hover:via-purple-600 sm:hover:to-pink-600 text-white font-semibold rounded-md sm:rounded-xl transform sm:hover:scale-105 transition-all duration-300 sm:shadow-lg sm:hover:shadow-blue-500/25 sm:group-hover:shadow-purple-500/25 text-xs sm:text-base"
                   >
                     <span className="hidden sm:inline">💬 Start Chat</span>
                     <span className="sm:hidden">💬 Chat</span>
